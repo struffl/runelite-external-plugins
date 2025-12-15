@@ -9,6 +9,7 @@ import net.runelite.api.*;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.*;
 import net.runelite.api.gameval.NpcID;
+import net.runelite.api.gameval.SpotanimID;
 import net.runelite.api.kit.KitType;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatColorType;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+
 @Slf4j
 @PluginDescriptor(name = "Hard TOB Damage Counter", description = "Shows personal and total damage for each room in the theatre of blood hard mode", tags = {"counter", "tracker"})
 public class TobDamageCounterPlugin extends Plugin {
@@ -38,7 +40,6 @@ public class TobDamageCounterPlugin extends Plugin {
     // world point they put a player in while they check if he is in a raid
     private static final WorldPoint TEMP_LOCATION = new WorldPoint(3370, 5152, 2);
 
-    private static final int VERZIK_HEAL_GRAPHIC = 1602;
     private static final int TOB_VAR_STATE = 6440;
     private static final int LOCAL_TOB_ORB_VARB = 6441;
 
@@ -216,9 +217,7 @@ public class TobDamageCounterPlugin extends Plugin {
             return;
         }
 
-        int id = event.getActor().getGraphic();
-
-        if (id == VERZIK_HEAL_GRAPHIC) {
+        if (event.getActor().hasSpotAnim(SpotanimID.VERZIK_P3_CREEPER_SPOT)) {
             if (config.showLeechMessages()) {
                 String chatMessage = new ChatMessageBuilder().append(ChatColorType.HIGHLIGHT).append(event.getActor().getName() + " has leeched and healed Verzik.").build();
 

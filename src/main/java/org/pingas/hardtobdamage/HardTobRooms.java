@@ -82,10 +82,10 @@ public enum HardTobRooms {
             NpcID.VERZIK_NYLOCAS_RANGED_HARD,
             NpcID.VERZIK_WEB_NPC_HARD);
 
-    private String name;
+    private final String name;
 
     @Getter
-    private Set<Integer> npcIds;
+    private final Set<Integer> npcIds;
 
     HardTobRooms(String name, Integer... npcIDs) {
         this.name = name;
