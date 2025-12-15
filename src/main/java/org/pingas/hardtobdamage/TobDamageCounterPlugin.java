@@ -30,7 +30,7 @@ import java.util.Set;
 @Slf4j
 @PluginDescriptor(name = "Hard TOB Damage Counter", description = "Shows personal and total damage for each room in the theatre of blood hard mode", tags = {"counter", "tracker"})
 public class TobDamageCounterPlugin extends Plugin {
-    private static final Set<Integer> blacklistNPCs = ImmutableSet.of(NpcID.VERZIK_HARD_PILLAR_NPC);
+    private static final Set<Integer> blacklistNPCs = ImmutableSet.of(NpcID.VERZIK_HARD_PILLAR_NPC, NpcID.VERZIK_PILLAR_NPC);
     private static final Set<Integer> SALVE_IDS = ImmutableSet.of(ItemID.SALVE_AMULET_E, ItemID.SALVE_AMULETEI, ItemID.SALVE_AMULET, ItemID.SALVE_AMULETI);
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###.##");
     private static final DecimalFormat DAMAGE_FORMAT = new DecimalFormat("#,###");

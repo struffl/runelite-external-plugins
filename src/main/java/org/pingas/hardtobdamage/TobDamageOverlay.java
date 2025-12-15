@@ -34,99 +34,99 @@ import javax.inject.Inject;
 import java.awt.*;
 import java.util.Map;
 
-class TobDamageOverlay extends OverlayPanel
-{
-	private final TobDamageCounterPlugin plugin;
-	private final TobDamageCounterConfig config;
+class TobDamageOverlay extends OverlayPanel {
+    private final TobDamageCounterPlugin plugin;
+    private final TobDamageCounterConfig config;
 
-	@Inject
-	TobDamageOverlay(TobDamageCounterPlugin plugin, TobDamageCounterConfig config)
-	{
-		super(plugin);
-		this.plugin = plugin;
-		this.config = config;
-	}
+    @Inject
+    TobDamageOverlay(TobDamageCounterPlugin plugin, TobDamageCounterConfig config) {
+        super(plugin);
+        this.plugin = plugin;
+        this.config = config;
+    }
 
-	@Override
-	public Dimension render(Graphics2D graphics)
-	{
-		if (!plugin.isInTob() || plugin.getLocalPlayerIndex() == 0)
-		{
-			return null;
-		}
+    @Override
+    public Dimension render(Graphics2D graphics) {
+        if (!plugin.isInTob()) {
+            return null;
+        }
 
-		// no damage yet
-		if (plugin.getCurrentRoom() == null && plugin.getRaidDamage() == null)
-		{
-			return null;
-		}
+        // no damage yet
+        if (plugin.getCurrentRoom() == null && plugin.getRaidDamage() == null) {
+            return null;
+        }
 
-		final String title = plugin.getCurrentRoom() == null ? "Hard Tob Damage" : plugin.getCurrentRoom().toString() + " Damage";
-		panelComponent.getChildren().add(
-			TitleComponent.builder()
-				.text(title)
-				.build());
+        final String title = plugin.getCurrentRoom() == null ? "Hard Tob Damage" : plugin.getCurrentRoom().toString() + " Damage";
+        panelComponent.getChildren().add(
+                TitleComponent.builder()
+                        .text(title)
+                        .build());
 
-		TobDamageCounterPlugin.Damage damage;
+        TobDamageCounterPlugin.Damage damage;
 
-		if (plugin.getCurrentRoom() != null)
-		{
-			damage = plugin.getDamageMap().get(plugin.getCurrentRoom());
-		}
-		else
-		{
-			damage = plugin.getRaidDamage();
-		}
+        if (plugin.getCurrentRoom() != null) {
+            damage = plugin.getDamageMap().get(plugin.getCurrentRoom());
+        } else {
+            damage = plugin.getRaidDamage();
+        }
 
 
-		String left = "Personal Damage";
-		String right = QuantityFormatter.formatNumber(damage.getPersonalDamage());
-		panelComponent.getChildren().add(
-			LineComponent.builder()
-				.left(left)
-				.right(right)
-				.build());
+        String left = "";
+        String right = "";
+        if (plugin.getLocalPlayerIndex() != 0) {
+            left = "Personal Damage";
+            right = QuantityFormatter.formatNumber(damage.getPersonalDamage());
+            panelComponent.getChildren().add(
+                    LineComponent.builder()
+                            .left(left)
+                            .right(right)
+                            .build());
+        } else {
+            left = "Spectating ...";
+            panelComponent.getChildren().add(
+                    LineComponent.builder()
+                            .left(left)
+                            .right("N/A")
+                            .build());
+        }
 
-		left = "Total Damage";
-		right = QuantityFormatter.formatNumber(damage.getTotalDamage());
-		panelComponent.getChildren().add(
-			LineComponent.builder()
-				.left(left)
-				.right(right)
-				.build());
+        left = "Total Damage";
+        right = QuantityFormatter.formatNumber(damage.getTotalDamage());
+        panelComponent.getChildren().add(
+                LineComponent.builder()
+                        .left(left)
+                        .right(right)
+                        .build());
 
-		if (config.showHealCount() && damage.getTotalHealing() != 0)
-		{
-			panelComponent.getChildren().add(
-				LineComponent.builder()
-					.left("Total Healing")
-					.right(QuantityFormatter.formatNumber(damage.getTotalHealing()))
-					.build()
-			);
-		}
+        if (config.showHealCount() && damage.getTotalHealing() != 0) {
+            panelComponent.getChildren().add(
+                    LineComponent.builder()
+                            .left("Total Healing")
+                            .right(QuantityFormatter.formatNumber(damage.getTotalHealing()))
+                            .build()
+            );
+        }
 
-		if (config.showLeechOverlay() && !damage.getLeechCounts().isEmpty())
-		{
-			panelComponent.getChildren().add(LineComponent.builder().build());
+        if (config.showLeechOverlay() && !damage.getLeechCounts().isEmpty()) {
+            panelComponent.getChildren().add(LineComponent.builder().build());
 
-			panelComponent.getChildren().add(
-				TitleComponent.builder()
-					.text("Leech Count")
-					.build());
+            panelComponent.getChildren().add(
+                    TitleComponent.builder()
+                            .text("Leech Count")
+                            .build());
 
-			Map<Player, Integer> leeches = damage.getLeechCounts();
-			for (Player p : leeches.keySet())
-			{
-				panelComponent.getChildren().add(
-					LineComponent.builder()
-						.left(p.getName())
-						.right(leeches.get(p) + "")
-						.build());
-			}
-		}
+            Map<Player, Integer> leeches = damage.getLeechCounts();
+            for (Player p : leeches.keySet()) {
+                panelComponent.getChildren().add(
+                        LineComponent.builder()
+                                .left(p.getName())
+                                .right(leeches.get(p) + "")
+                                .build());
+            }
+        }
 
 
-		return super.render(graphics);
-	}
+        return super.render(graphics);
+    }
 
 }
