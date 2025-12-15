@@ -61,7 +61,7 @@ class TobDamageOverlay extends OverlayPanel
 			return null;
 		}
 
-		final String title = plugin.getCurrentRoom() == null ? "Tob Damage" : plugin.getCurrentRoom().toString() + " Damage";
+		final String title = plugin.getCurrentRoom() == null ? "Hard Tob Damage" : plugin.getCurrentRoom().toString() + " Damage";
 		panelComponent.getChildren().add(
 			TitleComponent.builder()
 				.text(title)
@@ -105,7 +105,7 @@ class TobDamageOverlay extends OverlayPanel
 			);
 		}
 
-		if (config.showLeechOverlay() && damage.getLeechCounts().size() != 0)
+		if (config.showLeechOverlay() && !damage.getLeechCounts().isEmpty())
 		{
 			panelComponent.getChildren().add(LineComponent.builder().build());
 
