@@ -276,7 +276,7 @@ public class TobDamageCounterPlugin extends Plugin {
         }
 
         currentRoom = null;
-        log.warn("NPC ID not handled: " + npcID);
+        log.warn("NPC ID not handled: {}", npcID);
     }
 
     private void calcInTob() {
@@ -311,9 +311,12 @@ public class TobDamageCounterPlugin extends Plugin {
         int totalDamage = damage.getTotalDamage();
         int personalDamage = damage.getPersonalDamage();
 
-        double percentage = personalDamage / (totalDamage / 100.0);
-
-        String chatMessage = new ChatMessageBuilder().append(ChatColorType.NORMAL).append("Total " + (room != null ? room.toString() : "raid") + " damage: ").append(ChatColorType.HIGHLIGHT).append(DAMAGE_FORMAT.format(totalDamage)).append(ChatColorType.NORMAL).append(", Personal damage: ").append(ChatColorType.HIGHLIGHT).append(DAMAGE_FORMAT.format(personalDamage)).append(ChatColorType.NORMAL).append(" (").append(ChatColorType.HIGHLIGHT).append(DECIMAL_FORMAT.format(percentage)).append(ChatColorType.NORMAL).append("%)").build();
+        ChatMessageBuilder builder = new ChatMessageBuilder().append(ChatColorType.NORMAL).append("Total " + (room != null ? room.toString() : "raid") + " damage: ").append(ChatColorType.HIGHLIGHT).append(DAMAGE_FORMAT.format(totalDamage));
+        if (personalDamage > 0 && totalDamage > 0) {
+            double percentage = personalDamage / (totalDamage / 100.0);
+            builder.append(ChatColorType.NORMAL).append(", Personal damage: ").append(ChatColorType.HIGHLIGHT).append(DAMAGE_FORMAT.format(personalDamage)).append(ChatColorType.NORMAL).append(" (").append(ChatColorType.HIGHLIGHT).append(DECIMAL_FORMAT.format(percentage)).append(ChatColorType.NORMAL).append("%)");
+        }
+        String chatMessage = builder.build();
 
         chatMessageManager.queue(QueuedMessage.builder().type(ChatMessageType.FRIENDSCHATNOTIFICATION).runeLiteFormattedMessage(chatMessage).build());
     }
