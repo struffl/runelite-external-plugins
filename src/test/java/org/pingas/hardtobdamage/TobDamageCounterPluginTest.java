@@ -1,4 +1,4 @@
-package gg.trevor.tobdamage;
+package org.pingas.hardtobdamage;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;

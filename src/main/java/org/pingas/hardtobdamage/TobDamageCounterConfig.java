@@ -1,10 +1,10 @@
-package gg.trevor.tobdamage;
+package org.pingas.hardtobdamage;
 
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 
-@ConfigGroup("tobdamagecounter")
+@ConfigGroup("hardtobdamagecounter")
 public interface TobDamageCounterConfig extends Config
 {
 	@ConfigItem(
