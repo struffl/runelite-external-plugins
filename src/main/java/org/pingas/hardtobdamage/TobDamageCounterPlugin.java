@@ -155,7 +155,8 @@ public class TobDamageCounterPlugin extends Plugin {
 
     @Subscribe
     public void onNpcDespawned(NpcDespawned event) {
-        if (event.getNpc().getId() != NpcID.VERZIK_PHASE3_HARD) {
+        // If we're not both in the ToB raid and the final Verzik bat just despawned, don't print status
+        if (!(inTob && event.getNpc().getId() == NpcID.VERZIK_DEATH_BAT_HARD)) {
             return;
         }
 
