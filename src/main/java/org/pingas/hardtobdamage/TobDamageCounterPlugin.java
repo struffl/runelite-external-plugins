@@ -75,7 +75,7 @@ public class TobDamageCounterPlugin extends Plugin {
     private HardTobRooms currentRoom;
 
     @Getter
-    private Map<HardTobRooms, Damage> damageMap = new HashMap<>();
+    private final Map<HardTobRooms, Damage> damageMap = new HashMap<>();
 
     @Getter
     private Damage raidDamage;
